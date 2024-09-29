@@ -1,0 +1,176 @@
+[gd_scene load_steps=8 format=3 uid="uid://brj7vms3l4xm8"]
+
+[ext_resource type="Script" path="res://scripts/Interface/ShipDetailPopup.cs" id="1_ilbkw"]
+[ext_resource type="Theme" uid="uid://dkmm26wkjjcgh" path="res://better_theme.tres" id="1_mcwnl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vfm2l"]
+bg_color = Color(0.2, 0.203922, 0.196078, 0.882353)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 30.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7c8o"]
+content_margin_left = 10.0
+content_margin_top = 1.0
+content_margin_right = 10.0
+content_margin_bottom = 1.0
+bg_color = Color(0.121281, 0.0417041, 0.562503, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g6rmg"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.00901874, 0.00994804, 0.212211, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6onb"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+bg_color = Color(0.0712033, 6.73831e-07, 0.511899, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6efxo"]
+bg_color = Color(0.00905996, 0, 0.202992, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_right = 10.0
+expand_margin_bottom = 2.0
+
+[node name="ShipDetailPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ilbkw")
+
+[node name="Window" type="Window" parent="."]
+transparent_bg = true
+title = "Shipname"
+initial_position = 1
+size = Vector2i(300, 400)
+theme_override_styles/embedded_border = SubResource("StyleBoxFlat_vfm2l")
+
+[node name="Control" type="Control" parent="Window"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_mcwnl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/Control"]
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="pnl_pilot" type="PanelContainer" parent="Window/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_n7c8o")
+
+[node name="lbl_pilot" type="Label" parent="Window/Control/VBoxContainer/pnl_pilot"]
+layout_mode = 2
+text = " Pilot:"
+
+[node name="pnl_details" type="PanelContainer" parent="Window/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g6rmg")
+
+[node name="vbox_details" type="VBoxContainer" parent="Window/Control/VBoxContainer/pnl_details"]
+layout_mode = 2
+
+[node name="lbl_id" type="Label" parent="Window/Control/VBoxContainer/pnl_details/vbox_details"]
+layout_mode = 2
+text = "ID"
+
+[node name="lbl_flighttime" type="Label" parent="Window/Control/VBoxContainer/pnl_details/vbox_details"]
+layout_mode = 2
+text = "Flugzeit
+"
+
+[node name="HSeparator" type="HSeparator" parent="Window/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="pnl_cargo" type="PanelContainer" parent="Window/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o6onb")
+
+[node name="vbox_cargo" type="VBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo"]
+layout_mode = 2
+
+[node name="hbox_cargolegend" type="HBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo"]
+layout_mode = 2
+
+[node name="lbl_cargo" type="Label" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/hbox_cargolegend"]
+layout_mode = 2
+text = "Freight 1000/4000"
+
+[node name="VSeparator" type="VSeparator" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/hbox_cargolegend"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/hbox_cargolegend"]
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Amount		Vol		TC"
+horizontal_alignment = 3
+vertical_alignment = 3
+justification_flags = 162
+
+[node name="pnl_shipCargo" type="PanelContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6efxo")
+
+[node name="hbox_shipCargo" type="HBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo"]
+layout_mode = 2
+
+[node name="vbox_cargoItemName" type="VBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Label" type="Label" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo/vbox_cargoItemName"]
+layout_mode = 2
+
+[node name="vbox_cargoItemAmount" type="VBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="vbox_cargoItemVol" type="VBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_stretch_ratio = 0.6
+
+[node name="vbox_cargoItemTc" type="VBoxContainer" parent="Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo"]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_stretch_ratio = 0.5
+
+[connection signal="close_requested" from="Window" to="." method="_on_window_close_requested"]

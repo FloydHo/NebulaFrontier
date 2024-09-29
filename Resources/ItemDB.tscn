@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpscar73obfym"]
+
+[ext_resource type="Script" path="res://Resources/ItemDB.cs" id="1_dton1"]
+[ext_resource type="Resource" uid="uid://dep8yv7m6bxx7" path="res://Resources/Ore.tres" id="2_8br4d"]
+[ext_resource type="Resource" uid="uid://cicltt0qeeocp" path="res://Resources/EnergyCell.tres" id="3_a0esj"]
+
+[node name="ItemDb" type="Node"]
+script = ExtResource("1_dton1")
+Items = {
+100: ExtResource("2_8br4d"),
+101: ExtResource("3_a0esj")
+}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://cicltt0qeeocp"]
+
+[ext_resource type="Script" path="res://Resources/ItemResource.cs" id="1_dn1n3"]
+
+[resource]
+script = ExtResource("1_dn1n3")
+name = "Energy Cells"
+_id = "101"
+_type = "Basic"
+_description = ""
+_unitSize = 1
+_transportClass = 0
+_priceMin = 12
+_priceMax = 20

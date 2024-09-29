@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://rwma2p302jln"]
+
+[ext_resource type="PackedScene" uid="uid://cetxa6rl8wtfn" path="res://scenes/Buildings/Building.tscn" id="1_xg44a"]
+[ext_resource type="Script" path="res://scenes/Buildings/OreMine.cs" id="2_kh1el"]
+[ext_resource type="Texture2D" uid="uid://cd0ga6xywy4wc" path="res://assets/mine.png" id="3_lw64n"]
+
+[node name="Building" instance=ExtResource("1_xg44a")]
+z_index = 1
+script = ExtResource("2_kh1el")
+_name = "Erz Mine"
+_energy = 200
+_productionTime = 100
+_productionRate = 15
+_energyRate = 50
+_isActive = true
+ProducedItems = {
+100: 0
+}
+ResourceItems = {
+101: 200
+}
+
+[node name="Sprite2D" parent="." index="0"]
+z_index = 1
+position = Vector2(4.76837e-07, 4.76837e-07)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_lw64n")
+
+[node name="ColorRect" parent="." index="1"]
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 7.0
+offset_bottom = 7.0
+scale = Vector2(1.28, 1.28)
+color = Color(0.902496, 0.767111, 0.607683, 1)

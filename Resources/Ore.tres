@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://dep8yv7m6bxx7"]
+
+[ext_resource type="Script" path="res://Resources/ItemResource.cs" id="1_lu017"]
+
+[resource]
+script = ExtResource("1_lu017")
+name = "Ore  "
+_id = "100"
+_type = "Basic"
+_description = "100"
+_unitSize = 8
+_transportClass = 3
+_priceMin = 126
+_priceMax = 312

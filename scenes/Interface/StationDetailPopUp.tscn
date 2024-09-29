@@ -1,0 +1,80 @@
+[gd_scene load_steps=4 format=3 uid="uid://dswpy3acg2kxn"]
+
+[ext_resource type="Script" path="res://scenes/Interface/StationDetailPopUp.cs" id="1_q370q"]
+[ext_resource type="Theme" uid="uid://7f4h422w2od1" path="res://base_theme.tres" id="2_a885r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xgtre"]
+bg_color = Color(0.106297, 4.28364e-06, 0.496552, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_color = Color(0.194349, 0.194349, 0.194349, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[node name="StationDetailPopUp" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_right = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q370q")
+
+[node name="PU_StationDetails" type="Window" parent="."]
+transparent_bg = true
+title = "test"
+initial_position = 1
+size = Vector2i(300, 200)
+transparent = true
+theme = ExtResource("2_a885r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PU_StationDetails"]
+offset_left = 10.0
+offset_right = 82.0
+offset_bottom = 50.0
+
+[node name="lbl_id" type="Label" parent="PU_StationDetails/VBoxContainer"]
+layout_mode = 2
+
+[node name="lbl_products" type="Label" parent="PU_StationDetails/VBoxContainer"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_styles/normal = SubResource("StyleBoxFlat_xgtre")
+text = " Produkte"
+
+[node name="ColorRect" type="ColorRect" parent="PU_StationDetails/VBoxContainer/lbl_products"]
+visible = false
+z_index = -1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 100.0
+color = Color(0.345142, 0.243857, 0.999995, 1)
+
+[node name="vbc_products" type="VBoxContainer" parent="PU_StationDetails/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme = ExtResource("2_a885r")
+
+[node name="lbl_resources" type="Label" parent="PU_StationDetails/VBoxContainer"]
+layout_mode = 2
+text = " Ressourcen
+"
+
+[node name="vbc_resources" type="VBoxContainer" parent="PU_StationDetails/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PU_StationDetails/VBoxContainer"]
+layout_mode = 2
+text = " Docked
+"
+
+[node name="vbc_hangar" type="VBoxContainer" parent="PU_StationDetails/VBoxContainer"]
+layout_mode = 2
+
+[connection signal="close_requested" from="PU_StationDetails" to="." method="_on_pu_station_details_close_requested"]

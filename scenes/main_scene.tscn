@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://lk05au2g8ftb"]
+
+[ext_resource type="Script" path="res://scripts/MainScene.cs" id="1_hmqcy"]
+[ext_resource type="PackedScene" uid="uid://bm1l4x51mtr7g" path="res://scenes/Sectors/Beta_Sector.tscn" id="2_2utq5"]
+[ext_resource type="Script" path="res://scripts/Camera2d.cs" id="2_a7vp4"]
+[ext_resource type="PackedScene" uid="uid://bew28tk4gxemd" path="res://scenes/Interface/PlayerInfo.tscn" id="4_mjhlh"]
+[ext_resource type="PackedScene" uid="uid://r43wipwm5ool" path="res://scenes/Sectors/Gamma_Sector.tscn" id="4_pfras"]
+[ext_resource type="PackedScene" uid="uid://dug4qjgegsb0r" path="res://scenes/Interface/if_sectorObjects.tscn" id="5_hyne0"]
+
+[node name="MainScene" type="Node2D"]
+script = ExtResource("1_hmqcy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 538)
+zoom = Vector2(0.2, 0.2)
+position_smoothing_speed = 1.0
+script = ExtResource("2_a7vp4")
+
+[node name="Sectors" type="Node2D" parent="."]
+
+[node name="BetaSector" parent="Sectors" instance=ExtResource("2_2utq5")]
+position = Vector2(1055.03, 597.892)
+
+[node name="GammaSector" parent="Sectors" instance=ExtResource("4_pfras")]
+position = Vector2(-95, -65)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1921.0
+offset_bottom = 1079.0
+
+[node name="Button" type="Button" parent="CanvasLayer/UI"]
+visible = false
+layout_mode = 0
+offset_left = 12.0
+offset_top = 13.0
+offset_right = 99.0
+offset_bottom = 44.0
+text = "BUTTON 1"
+
+[node name="PlayerInfo" parent="CanvasLayer/UI" instance=ExtResource("4_mjhlh")]
+layout_mode = 1
+
+[node name="IfSectorObjects" parent="CanvasLayer/UI" instance=ExtResource("5_hyne0")]
+layout_mode = 1

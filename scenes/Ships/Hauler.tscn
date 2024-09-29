@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://14sjyqy4g0j7"]
+
+[ext_resource type="PackedScene" uid="uid://d2hqwndhemxqy" path="res://scenes/Ships/BP_Ship.tscn" id="1_424w4"]
+[ext_resource type="Texture2D" uid="uid://bd5da0wfs7h0q" path="res://assets/Hauler.png" id="2_5rkwf"]
+
+[node name="BpShip" instance=ExtResource("1_424w4")]
+_shipName = "Hauler"
+_velocity = 100.0
+_steering = 0.5
+_crewSize = 6
+_hull = 60000
+_armour = 200
+_weaponDmg = 100
+_cargoSize = 4000
+_transportClass = 3
+_price = 300000
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_5rkwf")
+flip_h = true
