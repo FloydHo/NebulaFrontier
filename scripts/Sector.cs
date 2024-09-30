@@ -16,7 +16,7 @@ public partial class Sector : Node2D
 
     public override void _Ready()
 	{
-        GameManager.Instance.AddSector(this);
+        //GameManager.Instance.AddSector(this);
 
         mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
 

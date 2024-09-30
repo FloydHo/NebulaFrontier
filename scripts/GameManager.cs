@@ -9,9 +9,10 @@ public partial class GameManager : Node
 	
 	public Timer globalTimer;
 
-	public static List<Sector> _sectors = new List<Sector>();
+	public static List<BP_Sector> _allSectors = new List<BP_Sector>();
     public static List<BP_Station> _allBuildings = new List<BP_Station>();
 	public static Dictionary<string, BP_Ship> _allShips = new Dictionary<string, BP_Ship>();
+	public static Dictionary<string, Jumpgate> _allJumpgates = new Dictionary<string, Jumpgate>();
 
     private PackedScene currentScene;
 	private Node currentSectorInstance;
@@ -49,9 +50,9 @@ public partial class GameManager : Node
 
     }
 
-	public void AddSector(Sector sector)
+	public void AddSector(BP_Sector sector)
 	{
-		_sectors.Add(sector);
+        _allSectors.Add(sector);
 	}
 
     public void LoadSectorScene(string scenePath)

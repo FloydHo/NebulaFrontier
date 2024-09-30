@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+[GlobalClass]
 public partial class BP_Sector : Node2D
 {
     //General Variables
@@ -11,6 +12,7 @@ public partial class BP_Sector : Node2D
 
     private List<BP_Ship> _shipList = new List<BP_Ship>();
     private List<BP_Station> _stationListBP = new List<BP_Station>();
+    private List<Jumpgate> _jumpgates = new List<Jumpgate>();
 
     private bool _hasFoxus = false;
 
@@ -24,17 +26,29 @@ public partial class BP_Sector : Node2D
 
     public override void _Ready()
     {
-        //base._Ready();
+        GameManager._allSectors.Add(this);
+
         _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
         _hex = GetNode<HexagonScript>("Hexagon");
         _hexRadius = _hex.GetHexRadius();
-
-        DebugCreateStations();
-        DebugCreateShip();
+        InitSector();
     }
+
+    public virtual void InitSector()
+    {
+
+    }
+
+    public void ConnectJumpgates()
+    {
+        foreach (var gate in _jumpgates)
+        {
+            gate.InitGate();
+        }
+    }
+
     public override void _Draw()
     {
-        //base._Draw();
         DrawHexagon();
     }
 
@@ -58,43 +72,48 @@ public partial class BP_Sector : Node2D
     {
         _stationListBP.Add(building);
         _mainScene.RegisterBuilding(building);
+        GameManager._allBuildings.Add(building);
     }
 
     public void AddShip(BP_Ship ship)
     {
-        _shipList.Add(ship);
+        AddShipToSector(ship);
         _mainScene.RegisterShip(ship);
+        GameManager._allShips.Add(ship.GetShipID(), ship);
     }
 
-    public void DebugCreateShip()
+    public void RemoveShipFromSector(BP_Ship ship) 
+    { 
+        _shipList.Remove(ship);
+    }
+    public void AddShipToSector(BP_Ship ship)
     {
-        var haulerScene = (PackedScene)ResourceLoader.Load("res://scenes/Ships/Hauler.tscn");
-        var hauler = (BP_Ship)haulerScene.Instantiate();
-        AddChild(hauler);
-        hauler.Position = new Vector2(900, 500);
+        _shipList.Add(ship);
+        ship.SetInSector(this);
     }
 
-    public void DebugCreateStations()
+    public void CreateJumpgate(string id, string cid, int x, int y)
     {
-        var solarScene = (PackedScene)ResourceLoader.Load("res://scenes/Buildings/SolarPowerPlant.tscn");
-        var solarPlant = (SolarPowerPlant)solarScene.Instantiate();
+        Vector2 newPos = new Vector2(x, y);
+        PackedScene jg = (PackedScene)ResourceLoader.Load("res://scenes/Buildings/Jumpgate.tscn");
+        Jumpgate jumpgate = (Jumpgate)jg.Instantiate();
+        jumpgate.Position = newPos;
+        jumpgate.SetID(id);
+        jumpgate.SetCurrentSector(this);
+        jumpgate.SetConnectedJumpgateID(cid);
+        AddChild(jumpgate);
+        AddJumpgate(jumpgate);
+    }
 
-        AddBuilding(solarPlant);
-
-        AddChild(solarPlant);
-        solarPlant.Position = new Vector2(400, 400);
-
-        var oreMineScene = (PackedScene)ResourceLoader.Load("res://scenes/Buildings/OreMine.tscn");
-        var oreMine = (OreMine)oreMineScene.Instantiate();
-
-        AddBuilding(oreMine);
-
-        AddChild(oreMine);
-        oreMine.Position = new Vector2(100, 200);
-
+    public void AddJumpgate(Jumpgate jg)
+    {
+        _jumpgates.Add(jg);
+        GameManager._allJumpgates.Add(jg.GetID(), jg);
     }
 
     public float GetHexRadius() => _hexRadius;
+
+    public string GetSectorName() => _sectorName;
 
 
 

@@ -1,0 +1,211 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\sector\\betasector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\sector\\betasector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\sector\\bp_sector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\sector\\bp_sector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scenes\\ships\\bp_ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scenes\\ships\\bp_ship.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\interface\\shipdetailpopup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\interface\\shipdetailpopup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Building\\Jumpgate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:scripts\\Building\\Jumpgate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\sector\\alphasector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\sector\\alphasector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\sector\\hexagonscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\sector\\hexagonscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\mainscene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\mainscene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|c:\\users\\floyd\\documents\\nebulafrontier\\scripts\\sector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C488A3F6-9E5F-4A12-BB5A-23707BEDF25E}|NebulaFrontier.csproj|solutionrelative:scripts\\sector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Floyd\\AppData\\Local\\Temp\\.vsdbgsrc\\59d341c6aba1444e9ee03db5868b12ceb16dc0771c79a5992f8d6404502f1393\\CSharpInstanceBridge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 10,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ShipDetailPopup.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Interface\\ShipDetailPopup.cs",
+              "RelativeDocumentMoniker": "scripts\\Interface\\ShipDetailPopup.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Interface\\ShipDetailPopup.cs",
+              "RelativeToolTip": "scripts\\Interface\\ShipDetailPopup.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAQwDkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-28T16:38:30.943Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HexagonScript.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\HexagonScript.cs",
+              "RelativeDocumentMoniker": "scripts\\Sector\\HexagonScript.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\HexagonScript.cs",
+              "RelativeToolTip": "scripts\\Sector\\HexagonScript.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T20:08:42.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BP_Ship.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scenes\\Ships\\BP_Ship.cs",
+              "RelativeDocumentMoniker": "scenes\\Ships\\BP_Ship.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scenes\\Ships\\BP_Ship.cs",
+              "RelativeToolTip": "scenes\\Ships\\BP_Ship.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAiwB4BAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T19:45:27.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CSharpInstanceBridge.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\AppData\\Local\\Temp\\.vsdbgsrc\\59d341c6aba1444e9ee03db5868b12ceb16dc0771c79a5992f8d6404502f1393\\CSharpInstanceBridge.cs",
+              "RelativeDocumentMoniker": "..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\59d341c6aba1444e9ee03db5868b12ceb16dc0771c79a5992f8d6404502f1393\\CSharpInstanceBridge.cs",
+              "ToolTip": "C:\\Users\\Floyd\\AppData\\Local\\Temp\\.vsdbgsrc\\59d341c6aba1444e9ee03db5868b12ceb16dc0771c79a5992f8d6404502f1393\\CSharpInstanceBridge.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\59d341c6aba1444e9ee03db5868b12ceb16dc0771c79a5992f8d6404502f1393\\CSharpInstanceBridge.cs [Read Only]",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAACAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T19:29:44.015Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Sector.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector.cs",
+              "RelativeDocumentMoniker": "scripts\\Sector.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector.cs",
+              "RelativeToolTip": "scripts\\Sector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T19:28:25.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AlphaSector.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\AlphaSector.cs",
+              "RelativeDocumentMoniker": "scripts\\Sector\\AlphaSector.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\AlphaSector.cs",
+              "RelativeToolTip": "scripts\\Sector\\AlphaSector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T19:27:05.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\GameManager.cs",
+              "RelativeDocumentMoniker": "scripts\\GameManager.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\GameManager.cs",
+              "RelativeToolTip": "scripts\\GameManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwDQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T18:59:11.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MainScene.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\MainScene.cs",
+              "RelativeDocumentMoniker": "scripts\\MainScene.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\MainScene.cs",
+              "RelativeToolTip": "scripts\\MainScene.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwDQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-28T17:10:08.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BP_Sector.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\BP_Sector.cs",
+              "RelativeDocumentMoniker": "scripts\\Sector\\BP_Sector.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\BP_Sector.cs",
+              "RelativeToolTip": "scripts\\Sector\\BP_Sector.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAE0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T18:27:53.629Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BetaSector.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\BetaSector.cs",
+              "RelativeDocumentMoniker": "scripts\\Sector\\BetaSector.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Sector\\BetaSector.cs",
+              "RelativeToolTip": "scripts\\Sector\\BetaSector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-29T19:45:51.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Jumpgate.cs",
+              "DocumentMoniker": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Building\\Jumpgate.cs",
+              "RelativeDocumentMoniker": "scripts\\Building\\Jumpgate.cs",
+              "ToolTip": "C:\\Users\\Floyd\\Documents\\nebulafrontier\\scripts\\Building\\Jumpgate.cs",
+              "RelativeToolTip": "scripts\\Building\\Jumpgate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-30T15:43:06.57Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

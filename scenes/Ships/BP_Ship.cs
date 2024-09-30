@@ -36,6 +36,8 @@ public partial class BP_Ship : Node2D
     List<(BP_Station target, int[] buy, int[] sell)> _targetStationsList = new List<(BP_Station, int[], int[])>();
     int _activeTargetStation = 0;
     
+    Jumpgate _targetJumpgate;
+
     Timer _waitTimer;
     int _dockTimer = 3;
     int _transportTimer = 6;
@@ -56,13 +58,13 @@ public partial class BP_Ship : Node2D
         _waitTimer.Timeout += WaitTimer;
         _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
         _crect = GetNode<ColorRect>("ColorRect");
-            
 
-  
+
+
         //Debug 
-        _targetStationsList.Add((GameManager._allBuildings[0], new int[] { 101}  , new int[0]));
-        _targetStationsList.Add((GameManager._allBuildings[1], new int[] { 100 }, new int[] { 101}));
-
+        //_targetStationsList.Add((GameManager._allBuildings[0], new int[] { 101}  , new int[0]));
+        //_targetStationsList.Add((GameManager._allBuildings[1], new int[] { 100 }, new int[] { 101}));
+        _targetJumpgate = GameManager._allJumpgates["BeAljg01"];
     }
 
     public override void _Input(InputEvent @event)
@@ -83,9 +85,16 @@ public partial class BP_Ship : Node2D
 
     public override void _Process(double delta)
     {
+        //MoveToTargetStation();
+        MoveToTargetJumpgate();
+    }
+
+
+    public void MoveToTargetStation()
+    {
         if (_tradingActive && _targetStationsList.Count != 0 && !_isDocked) //Docking
         {
-            if ((int)Position.X <= (int)_targetStationsList[_activeTargetStation].target.Position.X +5 && (int)Position.X >= (int)_targetStationsList[_activeTargetStation].target.Position.X - 5 &&
+            if ((int)Position.X <= (int)_targetStationsList[_activeTargetStation].target.Position.X + 5 && (int)Position.X >= (int)_targetStationsList[_activeTargetStation].target.Position.X - 5 &&
                 (int)Position.Y <= (int)_targetStationsList[_activeTargetStation].target.Position.Y + 5 && (int)Position.Y >= (int)_targetStationsList[_activeTargetStation].target.Position.Y - 5)
             {
                 _targetStationsList[_activeTargetStation].target.ShipDocking(this);
@@ -94,7 +103,7 @@ public partial class BP_Ship : Node2D
                 _waitTimer.WaitTime = _dockTimer;
                 _waitTimer.Start();
             }
-            else 
+            else
             {
                 MoveIfAlignedWithTarget();                                  //Traveling
             }
@@ -105,7 +114,7 @@ public partial class BP_Ship : Node2D
 
             if (_targetStationsList[_activeTargetStation].buy.Length > 0)   //Try to Buy
             {
-                foreach(var id in _targetStationsList[_activeTargetStation].buy)
+                foreach (var id in _targetStationsList[_activeTargetStation].buy)
                 {
                     int amount = _targetStationsList[_activeTargetStation].target.BuyWareFromStation(id, 1000);
                     if (_cargo.ContainsKey(id))
@@ -142,15 +151,29 @@ public partial class BP_Ship : Node2D
 
             _targetStationsList[_activeTargetStation].target.ShipUndock(this);
 
-            if (_activeTargetStation == _targetStationsList.Count-1) _activeTargetStation = 0;
+            if (_activeTargetStation == _targetStationsList.Count - 1) _activeTargetStation = 0;
             else _activeTargetStation += 1;
 
             _tradeComplete = false;
             _isDocked = false;
-            
+
             Show();
             //ShowCargo();
         }
+    }
+
+    public void MoveToTargetJumpgate()
+    {
+        if ((int)Position.X <= (int)_targetJumpgate.Position.X + 5 && (int)Position.X >= (int)_targetJumpgate.Position.X - 5 &&
+            (int)Position.Y <= (int)_targetJumpgate.Position.Y + 5 && (int)Position.Y >= (int)_targetJumpgate.Position.Y - 5)
+        {
+            _targetJumpgate.TransferShip(this);
+        }
+        else
+        {
+            MoveIfAlignedWithJumpgate();                            
+        }
+        
     }
 
     public bool isAligned(int x, int y)
@@ -175,6 +198,22 @@ public partial class BP_Ship : Node2D
     {
         int tx = (int)_targetStationsList[_activeTargetStation].target.Position.X;
         int ty = (int)_targetStationsList[_activeTargetStation].target.Position.Y;
+
+        if (isAligned(tx, ty))
+        {
+            Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
+            Position = new Vector2(Position.X + directionToStation.X * 0.1f, Position.Y + directionToStation.Y * 0.1f);
+        }
+        else
+        {
+            RotateTowardsStation(tx, ty);
+        }
+    }
+
+    public void MoveIfAlignedWithJumpgate()                               //Rotates Ship until it points in the Direction of Target (for now only Stations)
+    {
+        int tx = (int)_targetJumpgate.Position.X;
+        int ty = (int)_targetJumpgate.Position.Y;
 
         if (isAligned(tx, ty))
         {
@@ -244,4 +283,6 @@ public partial class BP_Ship : Node2D
 
     public string GetName() => _shipName;
     public string GetShipID() => _shipID;
+    public BP_Sector GetInSector() => _inSector;
+    public void SetInSector(BP_Sector insec) => _inSector = insec;
 }

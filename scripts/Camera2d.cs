@@ -5,8 +5,8 @@ using static Godot.TextServer;
 public partial class Camera2d : Camera2D
 {
     private float baseZoomSpeed = 0.1f;
-    private float minZoom = 0.1f;
-    private float maxZoom = 10.0f;
+    [Export] private float minZoom = 0.1f;
+    [Export] private float maxZoom = 10.0f;
 
     private Vector2 _targetZoom;
 
@@ -87,7 +87,7 @@ public partial class Camera2d : Camera2D
 
     private void AdjustPosition(Vector2 mousePos, int direction, float zoomSpeed)
     {
-        GD.Print($"{direction} | X: {Zoom.X} Y: {Zoom.Y} | speed: {zoomSpeed} ");
+        //GD.Print($"{direction} | X: {Zoom.X} Y: {Zoom.Y} | speed: {zoomSpeed} ");
         Vector2 delta = mousePos - Position;
         Position += delta * (direction * zoomSpeed / Zoom.X);
     }

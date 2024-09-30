@@ -30,7 +30,6 @@ public partial class BP_Station : Node2D
     public List<BP_Ship> _hangar = new List<BP_Ship>();
     private bool _hasPopUp = false;
 
-
     ColorRect _crect;
     MainScene _mainScene;
 
@@ -44,6 +43,7 @@ public partial class BP_Station : Node2D
         _crect = GetNode<ColorRect>("ColorRect");
         _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
         SetProcessInput(true);
+
     }
 
     public override void _Input(InputEvent @event)
@@ -100,16 +100,16 @@ public partial class BP_Station : Node2D
         return amount;
     }
 
-    public void SetHasPopup(bool b)
-    {
-        _hasPopUp = b;
-    }
+    public void SetHasPopup(bool b) =>  _hasPopUp = b;
+
 
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
+        
     }
+
 
 
     public virtual void ProductionTick()

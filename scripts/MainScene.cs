@@ -22,11 +22,9 @@ public partial class MainScene : Node2D
     {
         StartTimer();
 
-        activeScene = GD.Load<PackedScene>("res://scenes/Sectors/Alpha_Sector.tscn");
         _canvasLayer = GetNode<CanvasLayer>("CanvasLayer");
 
-        var sectorInstance = (Sector)activeScene.Instantiate();
-        //AddChild(sectorInstance);
+        InitJumpgates();
     }
 
     private void StartTimer()
@@ -46,6 +44,14 @@ public partial class MainScene : Node2D
         UpdateAllBuildings();
 
 
+    }
+
+    public void InitJumpgates()
+    {
+        foreach (var sec in GameManager._allSectors)
+        {
+            sec.ConnectJumpgates();
+        }
     }
 
     private void OnMapObjectClicked(BP_Station b)
@@ -87,7 +93,6 @@ public partial class MainScene : Node2D
     public void RegisterBuilding(BP_Station building)
     {
         allBuildings.Add(building);
-        GameManager._allBuildings.Add(building);
         selectedBuilding = allBuildings[0];
     }
 

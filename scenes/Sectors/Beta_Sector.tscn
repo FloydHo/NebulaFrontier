@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://bm1l4x51mtr7g"]
 
 [ext_resource type="Texture2D" uid="uid://chgw281w5ht4e" path="res://assets/Pictures/BackGorundStars.jpg" id="1_6wcum"]
-[ext_resource type="Script" path="res://scripts/Sector/BP_Sector.cs" id="1_qx4gf"]
+[ext_resource type="Script" path="res://scripts/Sector/BetaSector.cs" id="1_gh5ww"]
 [ext_resource type="Script" path="res://scripts/Sector/HexagonScript.cs" id="3_ropj0"]
 
 [node name="BetaSector" type="Node2D"]
 position = Vector2(904, 559)
 scale = Vector2(0.5, 0.5)
-script = ExtResource("1_qx4gf")
-metadata/_edit_group_ = true
+script = ExtResource("1_gh5ww")
+_sectorName = "Beta"
 
 [node name="BackGorundStars" type="Sprite2D" parent="."]
 visible = false

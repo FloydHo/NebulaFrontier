@@ -108,6 +108,9 @@ layout_mode = 2
 layout_mode = 2
 text = "ID"
 
+[node name="lbl_currenSector" type="Label" parent="Window/Control/VBoxContainer/pnl_details/vbox_details"]
+layout_mode = 2
+
 [node name="lbl_flighttime" type="Label" parent="Window/Control/VBoxContainer/pnl_details/vbox_details"]
 layout_mode = 2
 text = "Flugzeit

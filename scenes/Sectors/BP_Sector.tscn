@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cf7enhesu0mk0"]
+
+[ext_resource type="Script" path="res://scripts/Sector/BP_Sector.cs" id="1_ydshh"]
+[ext_resource type="Texture2D" uid="uid://chgw281w5ht4e" path="res://assets/Pictures/BackGorundStars.jpg" id="2_1mxnj"]
+[ext_resource type="Script" path="res://scripts/Sector/HexagonScript.cs" id="3_7fome"]
+
+[node name="BP_Sector" type="Node2D"]
+position = Vector2(904, 559)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_ydshh")
+
+[node name="BackGorundStars" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.259294, 0.259294, 0.259294, 1)
+z_index = -1
+position = Vector2(2, 0)
+texture = ExtResource("2_1mxnj")
+
+[node name="Hexagon" type="Polygon2D" parent="."]
+modulate = Color(0.237539, 0.237539, 0.237539, 1)
+antialiased = true
+texture = ExtResource("2_1mxnj")
+texture_offset = Vector2(2000, 2000)
+texture_scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(1500, 0, 750, 1299.04, -750, 1299.04, -1500, -0.000131134, -750, -1299.04, 750, -1299.04)
+script = ExtResource("3_7fome")
+_hexRadius = 1500.0

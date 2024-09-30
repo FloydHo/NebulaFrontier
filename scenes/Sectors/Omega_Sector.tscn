@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://1pmsrxnae4y4"]
+
+[ext_resource type="PackedScene" uid="uid://cf7enhesu0mk0" path="res://scenes/Sectors/BP_Sector.tscn" id="1_mdrx2"]
+[ext_resource type="Script" path="res://scripts/Sector/OmegaSector.cs" id="2_7num7"]
+
+[node name="OmegaSector" instance=ExtResource("1_mdrx2")]
+script = ExtResource("2_7num7")

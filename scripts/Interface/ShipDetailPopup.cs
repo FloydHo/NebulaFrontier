@@ -11,6 +11,7 @@ public partial class ShipDetailPopup : Control
     private Label _pilotname;
     private Label _shipname;
     private Label _shipID;
+    private Label _currentSector;
     private Label _flightime;
     private Label _cargo;
     
@@ -25,6 +26,7 @@ public partial class ShipDetailPopup : Control
 
         _pilotname = GetNode<Label>("Window/Control/VBoxContainer/pnl_pilot/lbl_pilot");
         _shipID = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_id");
+        _currentSector = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_currenSector");
         _flightime = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_flighttime");
         _cargo = GetNode<Label>("Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/hbox_cargolegend/lbl_cargo");
         _cargoContainerItemName = GetNode<VBoxContainer>("Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo/vbox_cargoItemName");
@@ -53,6 +55,7 @@ public partial class ShipDetailPopup : Control
         ClearItemList();
         _pilotname.Text = "Peter Maffay";
         _shipID.Text = ($"ID: {_targetShip.GetShipID()}");
+        _currentSector.Text  = ($"In Sektor: {_targetShip.GetInSector().GetSectorName()}");
         _flightime.Text = "00:00:20";
         _cargo.Text = ($"Fracht: {_targetShip.GetUsedCargoSize(),-5}/{_targetShip.GetCargoSize()}");
 
