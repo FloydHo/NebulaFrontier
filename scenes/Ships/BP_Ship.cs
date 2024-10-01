@@ -49,9 +49,14 @@ public partial class BP_Ship : Node2D
     private MainScene _mainScene;
     ColorRect _crect;
 
+
+    List<Jumpgate> _jgPath = new List<Jumpgate>();
+
     public override void _Ready()
     {
         CreateID();
+
+ 
 
         //SaveNodes
         _waitTimer = GetNode<Timer>("waitTimer");
@@ -64,7 +69,7 @@ public partial class BP_Ship : Node2D
         //Debug 
         //_targetStationsList.Add((GameManager._allBuildings[0], new int[] { 101}  , new int[0]));
         //_targetStationsList.Add((GameManager._allBuildings[1], new int[] { 100 }, new int[] { 101}));
-        _targetJumpgate = GameManager._allJumpgates["BeAljg01"];
+        _targetJumpgate = GameManager._allJumpgates["BeOmjg01"];
     }
 
     public override void _Input(InputEvent @event)
@@ -85,8 +90,26 @@ public partial class BP_Ship : Node2D
 
     public override void _Process(double delta)
     {
-        //MoveToTargetStation();
-        MoveToTargetJumpgate();
+        Travel();
+    }
+
+    public void Travel()
+    {
+        if (_targetStationsList.Count != 0 && _jgPath.Count == 0)
+        {
+            if (_targetStationsList[_activeTargetStation].target.GetSector() == _inSector)
+            {
+                MoveToTargetStation();
+            }
+            else
+            {
+                _jgPath = PathToTargetSector(_targetStationsList[_activeTargetStation].target.GetSector());
+            }
+        }
+        else if(_jgPath.Count != 0)
+        {
+            MoveToTargetJumpgate();
+        }
     }
 
 
@@ -164,16 +187,21 @@ public partial class BP_Ship : Node2D
 
     public void MoveToTargetJumpgate()
     {
-        if ((int)Position.X <= (int)_targetJumpgate.Position.X + 5 && (int)Position.X >= (int)_targetJumpgate.Position.X - 5 &&
-            (int)Position.Y <= (int)_targetJumpgate.Position.Y + 5 && (int)Position.Y >= (int)_targetJumpgate.Position.Y - 5)
+        if (_jgPath.Count != 0)
         {
-            _targetJumpgate.TransferShip(this);
+            _targetJumpgate = _jgPath[0];
+            if ((int)Position.X <= (int)_targetJumpgate.Position.X + 5 && (int)Position.X >= (int)_targetJumpgate.Position.X - 5 &&
+                (int)Position.Y <= (int)_targetJumpgate.Position.Y + 5 && (int)Position.Y >= (int)_targetJumpgate.Position.Y - 5)
+            {
+                _targetJumpgate.TransferShip(this);
+                _jgPath.RemoveAt(0);
+            }
+            else
+            {
+                MoveIfAlignedWithJumpgate();
+            }
         }
-        else
-        {
-            MoveIfAlignedWithJumpgate();                            
-        }
-        
+            
     }
 
     public bool isAligned(int x, int y)
@@ -202,7 +230,7 @@ public partial class BP_Ship : Node2D
         if (isAligned(tx, ty))
         {
             Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
-            Position = new Vector2(Position.X + directionToStation.X * 0.1f, Position.Y + directionToStation.Y * 0.1f);
+            Position = new Vector2(Position.X + directionToStation.X * 0.5f, Position.Y + directionToStation.Y * 0.5f);
         }
         else
         {
@@ -210,7 +238,7 @@ public partial class BP_Ship : Node2D
         }
     }
 
-    public void MoveIfAlignedWithJumpgate()                               //Rotates Ship until it points in the Direction of Target (for now only Stations)
+    public void MoveIfAlignedWithJumpgate()                              
     {
         int tx = (int)_targetJumpgate.Position.X;
         int ty = (int)_targetJumpgate.Position.Y;
@@ -218,7 +246,7 @@ public partial class BP_Ship : Node2D
         if (isAligned(tx, ty))
         {
             Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
-            Position = new Vector2(Position.X + directionToStation.X * 0.1f, Position.Y + directionToStation.Y * 0.1f);
+            Position = new Vector2(Position.X + directionToStation.X * 0.5f, Position.Y + directionToStation.Y * 0.5f);
         }
         else
         {
@@ -227,9 +255,72 @@ public partial class BP_Ship : Node2D
     }
 
 
+    public List<Jumpgate> PathToTargetSector(BP_Sector target)
+    {
+        bool foundSector = false; 
+        bool searchOn = true;
+
+        List<Jumpgate> path = new List<Jumpgate>();
+
+        List<(BP_Sector sector, List<Jumpgate> paths)> toCheck = new List<(BP_Sector, List<Jumpgate>)>();
+        List<BP_Sector> checkedSector = new List<BP_Sector>();
+
+        toCheck.Add((_inSector, new List<Jumpgate>()));
+        while (searchOn)
+        {
+            var check = toCheck[0];
+            foreach (var gate in check.sector.GetListOfJumpgates())
+            {
+                if (checkedSector.Contains(gate.GetTargetSector()))
+                {
+
+                }
+                else if (gate.GetTargetSector() == target)
+                {
+                    searchOn = false;
+                    foundSector = true;
+                    path = check.paths;
+                    path.Add(gate);
+                }
+                else
+                {
+                    List<Jumpgate> newpath = new List<Jumpgate>(check.paths);
+                    newpath.Add(gate);
+                    toCheck.Add((gate.GetTargetSector(), newpath));
+                }
+            }
+
+            checkedSector.Add(check.sector);
+            toCheck.RemoveAt(0);
+
+            if (toCheck.Count == 0) searchOn = false;
+        }
+        return path;
+    }
+
+    public List<Jumpgate> GetShortest(List<List<Jumpgate>> compareMe)
+    {
+        List<Jumpgate> path = new List<Jumpgate>();
+
+        int length = 0;
+        foreach (var item in compareMe)
+        {
+            if (length == 0)
+            {
+                length = item.Count;
+                path = item;
+            }
+            else if (item.Count < length)
+            {
+                length = item.Count;
+                path = item;
+            }
+        }
+        return path;
+    }
 
 
-    public void CalculateUsedCargo() 
+public void CalculateUsedCargo() 
     {
         _usedCargoSpace = 0;
         foreach (var item in _cargo)
@@ -280,9 +371,14 @@ public partial class BP_Ship : Node2D
         _hasPopUp = b;
     }
 
+    public void SetPath(BP_Sector sec)
+    {
+        _jgPath = PathToTargetSector(sec);
+    }
 
     public string GetName() => _shipName;
     public string GetShipID() => _shipID;
     public BP_Sector GetInSector() => _inSector;
     public void SetInSector(BP_Sector insec) => _inSector = insec;
+    public void AddTargetStation((BP_Station target, int[] buy, int[] sell) give) => _targetStationsList.Add(give);
 }

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyw021e8gh2st"]
+
+[ext_resource type="PackedScene" uid="uid://cetxa6rl8wtfn" path="res://scenes/Buildings/Building.tscn" id="1_1ctcm"]
+[ext_resource type="Texture2D" uid="uid://b3xxcva7k6y05" path="res://assets/SpaceStation.png" id="2_0wu5a"]
+
+[node name="Building" instance=ExtResource("1_1ctcm")]
+_name = "TradingStation"
+ResourceItems = {
+100: 0
+}
+
+[node name="Sprite2D" parent="." index="0"]
+z_index = 1
+scale = Vector2(0.0390625, 0.0390625)
+texture = ExtResource("2_0wu5a")
+
+[node name="ColorRect" parent="." index="1"]
+color = Color(0.78276, 0.38115, 0.437254, 1)

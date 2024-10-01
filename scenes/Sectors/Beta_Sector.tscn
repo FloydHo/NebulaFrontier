@@ -26,3 +26,6 @@ texture_scale = Vector2(0.5, 0.5)
 polygon = PackedVector2Array(1500, 0, 750, 1299.04, -750, 1299.04, -1500, -0.000131134, -750, -1299.04, 750, -1299.04)
 script = ExtResource("3_ropj0")
 _hexRadius = 1500.0
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-950, 654)

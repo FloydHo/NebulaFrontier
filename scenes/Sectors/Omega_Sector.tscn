@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://1pmsrxnae4y4"]
+[gd_scene load_steps=3 format=3 uid="uid://di4tspstxi5pl"]
 
 [ext_resource type="PackedScene" uid="uid://cf7enhesu0mk0" path="res://scenes/Sectors/BP_Sector.tscn" id="1_mdrx2"]
 [ext_resource type="Script" path="res://scripts/Sector/OmegaSector.cs" id="2_7num7"]
 
 [node name="OmegaSector" instance=ExtResource("1_mdrx2")]
 script = ExtResource("2_7num7")
+_sectorName = "Omega"
+
+[node name="Hexagon" parent="." index="1"]
+polygon = PackedVector2Array(1500, 0, 750, 1299.04, -750, 1299.04, -1500, -0.000131134, -750, -1299.04, 750, -1299.04)

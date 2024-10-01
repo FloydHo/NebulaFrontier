@@ -26,11 +26,14 @@ public partial class BP_Sector : Node2D
 
     public override void _Ready()
     {
-        GameManager._allSectors.Add(this);
+        
 
         _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
         _hex = GetNode<HexagonScript>("Hexagon");
         _hexRadius = _hex.GetHexRadius();
+
+        GameManager._allSectors.Add(this);
+
         InitSector();
     }
 
@@ -112,8 +115,9 @@ public partial class BP_Sector : Node2D
     }
 
     public float GetHexRadius() => _hexRadius;
-
     public string GetSectorName() => _sectorName;
+
+    public List<Jumpgate> GetListOfJumpgates() => _jumpgates;
 
 
 

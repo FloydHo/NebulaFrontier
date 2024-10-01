@@ -5,7 +5,7 @@
 
 [node name="BpShip" instance=ExtResource("1_424w4")]
 _shipName = "Hauler"
-_velocity = 100.0
+_velocity = 500.0
 _steering = 0.5
 _crewSize = 6
 _hull = 60000

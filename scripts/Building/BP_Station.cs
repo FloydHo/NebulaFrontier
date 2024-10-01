@@ -12,6 +12,7 @@ public partial class BP_Station : Node2D
     Area2D area2d;
 
     public int _ID;
+    public BP_Sector _inSector;
     public static int _counterBuildings = 0;
     [Export] public string _name { get; set; }
     [Export] public int _ore { get; set; }       //Production Ressource
@@ -116,5 +117,7 @@ public partial class BP_Station : Node2D
     {
 
     }
+    public void SetSector(BP_Sector s) => _inSector = s; 
+    public BP_Sector GetSector() => _inSector;
 
 }

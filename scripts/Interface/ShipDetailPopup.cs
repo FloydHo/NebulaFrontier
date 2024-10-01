@@ -104,4 +104,16 @@ public partial class ShipDetailPopup : Control
         Hide();
         QueueFree();
     }
+
+    public void _on_button_pressed()
+    {
+        _targetShip.AddTargetStation((GameManager._allBuildings[1], new int[] { 101 }, new int[0]));
+        _targetShip.AddTargetStation((GameManager._allBuildings[2], new int[] { 100}  , new int[] { 101 }));
+        _targetShip.AddTargetStation((GameManager._allBuildings[0], new int[0] , new int[] { 100 }));
+    }
+
+    public void _on_button_2_pressed()
+    {
+        _targetShip.SetPath(GameManager._allSectors[0]);
+    }
 }

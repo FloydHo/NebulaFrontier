@@ -1,15 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://devb484iv80r6"]
+[gd_scene load_steps=3 format=3 uid="uid://devb484iv80r6"]
 
 [ext_resource type="PackedScene" uid="uid://cf7enhesu0mk0" path="res://scenes/Sectors/BP_Sector.tscn" id="1_b3piq"]
 [ext_resource type="Script" path="res://scripts/Sector/DeltaSector.cs" id="2_11l64"]
-[ext_resource type="Texture2D" uid="uid://cy4ju60kggpea" path="res://assets/Sun.png" id="3_4lg14"]
 
 [node name="DeltaSector" instance=ExtResource("1_b3piq")]
 script = ExtResource("2_11l64")
 _sectorName = "Delta"
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
-clip_children = 2
-position = Vector2(464, -864)
-scale = Vector2(0.23175, 0.22775)
-texture = ExtResource("3_4lg14")
+[node name="BackGorundStars" parent="." index="0"]
+clip_children = 1
+
+[node name="Hexagon" parent="." index="1"]
+polygon = PackedVector2Array(1500, 0, 750, 1299.04, -750, 1299.04, -1500, -0.000131134, -750, -1299.04, 750, -1299.04)
+
+[node name="Node2D" type="Node2D" parent="." index="2"]

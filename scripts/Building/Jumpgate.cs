@@ -41,7 +41,9 @@ public partial class Jumpgate : Node2D
     public void SetCurrentSector(BP_Sector sec) => _currentSector = sec;
     public BP_Sector GetSector() => _currentSector;
     public void SetTargetSecotr(BP_Sector sect) => _connectToSector = sect;
+    public BP_Sector GetTargetSector() => _connectToSector;
     public void SetConnectedJumpgate(Jumpgate jg) => _connectToJumpgate = jg;
+    public Jumpgate GetConnectedJumpgate() => _connectToJumpgate;
     public void SetConnectedJumpgateID(string cid) => _connectedGateID = cid;
 
 }

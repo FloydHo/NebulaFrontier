@@ -1,27 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://r43wipwm5ool"]
+[gd_scene load_steps=3 format=3 uid="uid://c6onfcal5bkfb"]
 
+[ext_resource type="PackedScene" uid="uid://cf7enhesu0mk0" path="res://scenes/Sectors/BP_Sector.tscn" id="1_22yi6"]
 [ext_resource type="Script" path="res://scripts/Sector/GammaSector.cs" id="1_fkne7"]
-[ext_resource type="Texture2D" uid="uid://chgw281w5ht4e" path="res://assets/Pictures/BackGorundStars.jpg" id="2_p7mq5"]
-[ext_resource type="Script" path="res://scripts/Sector/HexagonScript.cs" id="3_1q2xe"]
 
-[node name="GammaSector" type="Node2D"]
-position = Vector2(904, 559)
-scale = Vector2(0.5, 0.5)
+[node name="GammaSector" instance=ExtResource("1_22yi6")]
 script = ExtResource("1_fkne7")
+_sectorName = "Gamma"
 
-[node name="BackGorundStars" type="Sprite2D" parent="."]
-visible = false
-modulate = Color(0.259294, 0.259294, 0.259294, 1)
-z_index = -1
-position = Vector2(2, 0)
-texture = ExtResource("2_p7mq5")
-
-[node name="Hexagon" type="Polygon2D" parent="."]
-modulate = Color(0.237539, 0.237539, 0.237539, 1)
-antialiased = true
-texture = ExtResource("2_p7mq5")
-texture_offset = Vector2(2000, 2000)
-texture_scale = Vector2(0.5, 0.5)
+[node name="Hexagon" parent="." index="1"]
 polygon = PackedVector2Array(1500, 0, 750, 1299.04, -750, 1299.04, -1500, -0.000131134, -750, -1299.04, 750, -1299.04)
-script = ExtResource("3_1q2xe")
-_hexRadius = 1500.0

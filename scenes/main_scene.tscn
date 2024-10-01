@@ -1,14 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://lk05au2g8ftb"]
+[gd_scene load_steps=10 format=3 uid="uid://lk05au2g8ftb"]
 
 [ext_resource type="Script" path="res://scripts/MainScene.cs" id="1_hmqcy"]
 [ext_resource type="PackedScene" uid="uid://bm1l4x51mtr7g" path="res://scenes/Sectors/Beta_Sector.tscn" id="2_2utq5"]
 [ext_resource type="Script" path="res://scripts/Camera2d.cs" id="2_a7vp4"]
 [ext_resource type="PackedScene" uid="uid://bew28tk4gxemd" path="res://scenes/Interface/PlayerInfo.tscn" id="4_mjhlh"]
-[ext_resource type="PackedScene" uid="uid://r43wipwm5ool" path="res://scenes/Sectors/Gamma_Sector.tscn" id="4_pfras"]
+[ext_resource type="PackedScene" uid="uid://c6onfcal5bkfb" path="res://scenes/Sectors/Gamma_Sector.tscn" id="4_pfras"]
 [ext_resource type="PackedScene" uid="uid://dug4qjgegsb0r" path="res://scenes/Interface/if_sectorObjects.tscn" id="5_hyne0"]
 [ext_resource type="PackedScene" uid="uid://devb484iv80r6" path="res://scenes/Sectors/Delta_Sector.tscn" id="5_kgxk2"]
-[ext_resource type="PackedScene" uid="uid://1pmsrxnae4y4" path="res://scenes/Sectors/Omega_Sector.tscn" id="7_6df0v"]
-[ext_resource type="Script" path="res://scripts/Sector/GammaSector.cs" id="8_b36qo"]
+[ext_resource type="PackedScene" uid="uid://di4tspstxi5pl" path="res://scenes/Sectors/Omega_Sector.tscn" id="7_6df0v"]
 [ext_resource type="PackedScene" uid="uid://c5ca0kafde487" path="res://scenes/Sectors/Alpha_Sector.tscn" id="9_75hqw"]
 
 [node name="MainScene" type="Node2D"]
@@ -30,14 +29,13 @@ position = Vector2(1184, 670)
 position = Vector2(0, 5)
 
 [node name="GammaSector" parent="Sectors" instance=ExtResource("4_pfras")]
-position = Vector2(-1, -1341)
+position = Vector2(-8, -1342)
 
 [node name="DeltaSector" parent="Sectors" instance=ExtResource("5_kgxk2")]
 position = Vector2(1186, -2021)
 
 [node name="OmegaSector" parent="Sectors" instance=ExtResource("7_6df0v")]
-position = Vector2(-1177, 682)
-script = ExtResource("8_b36qo")
+position = Vector2(-1198, 686)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -63,7 +61,7 @@ layout_mode = 1
 
 [node name="IfSectorObjects" parent="CanvasLayer/UI" instance=ExtResource("5_hyne0")]
 layout_mode = 1
-offset_left = 4.0
+offset_left = 2.0
 offset_top = 13.0
 offset_right = 4.0
 offset_bottom = 13.0
