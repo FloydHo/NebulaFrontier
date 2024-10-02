@@ -128,7 +128,7 @@ public partial class BP_Ship : Node2D
             }
             else
             {
-                MoveIfAlignedWithTarget();                                  //Traveling
+                MoveIfAlignedWithTarget(_activeTargetStation.Position.X, _activeTargetStation.Position.Y);                                  //Traveling
             }
         }
         else if (_isDocked && !_tradeComplete && _wait)                     //Trading
@@ -137,30 +137,12 @@ public partial class BP_Ship : Node2D
 
             if (_targetStationsList[_activeTargetStation].buy.Length > 0)   //Try to Buy
             {
-                foreach (var id in _targetStationsList[_activeTargetStation].buy)
-                {
-                    int amount = _targetStationsList[_activeTargetStation].target.BuyWareFromStation(id, 1000);
-                    if (_cargo.ContainsKey(id))
-                    {
-                        _cargo[id] += amount;
-                    }
-                    else
-                    {
-                        _cargo.Add(id, amount);
-                    }
-                }
-                CalculateUsedCargo();
+                ExecuteBuy();
             }
 
             if (_targetStationsList[_activeTargetStation].sell.Length > 0)  //Try to Sell
             {
-                foreach (var id in _targetStationsList[_activeTargetStation].sell)
-                {
-                    int amount = _targetStationsList[_activeTargetStation].target.SellWareToStation(id, _cargo[id]);
-                    _cargo[id] -= amount;
-                    if (_cargo[id] == 0) _cargo.Remove(id);
-                }
-                CalculateUsedCargo();
+                ExecuteSell();
             }
 
             _tradeComplete = true;
@@ -168,7 +150,7 @@ public partial class BP_Ship : Node2D
             _waitTimer.WaitTime = _transportTimer;
             _waitTimer.Start();
         }
-        else if (_isDocked && _tradeComplete && _wait)                      // Undocking   
+        else if (_isDocked && _tradeComplete && _wait)                      // Undocking   && Traiding Loop
         {
             _wait = false;
 
@@ -185,6 +167,34 @@ public partial class BP_Ship : Node2D
         }
     }
 
+    public void ExecuteBuy()
+    {
+        foreach (var id in _targetStationsList[_activeTargetStation].buy)
+        {
+            int amount = _targetStationsList[_activeTargetStation].target.BuyWareFromStation(id, 1000);
+            if (_cargo.ContainsKey(id))
+            {
+                _cargo[id] += amount;
+            }
+            else
+            {
+                _cargo.Add(id, amount);
+            }
+        }
+        CalculateUsedCargo();
+    }
+
+    public void ExecuteSell() 
+    {
+        foreach (var id in _targetStationsList[_activeTargetStation].sell)
+        {
+            int amount = _targetStationsList[_activeTargetStation].target.SellWareToStation(id, _cargo[id]);
+            _cargo[id] -= amount;
+            if (_cargo[id] == 0) _cargo.Remove(id);
+        }
+        CalculateUsedCargo();
+    }
+
     public void MoveToTargetJumpgate()
     {
         if (_jgPath.Count != 0)
@@ -198,10 +208,9 @@ public partial class BP_Ship : Node2D
             }
             else
             {
-                MoveIfAlignedWithJumpgate();
+                MoveIfAlignedWithTarget(_targetJumpgate.Position.X, _targetJumpgate.Position.Y);
             }
-        }
-            
+        }    
     }
 
     public bool isAligned(int x, int y)
@@ -212,7 +221,7 @@ public partial class BP_Ship : Node2D
         return rotationDifference <= 0.01;
     }
 
-    public void RotateTowardsStation(int x, int y)
+    public void RotateTowards(int x, int y)
     {
         Vector2 directionToStation = (new Vector2(x, y) - Position).Normalized();
         float targetRotation = directionToStation.Angle();
@@ -221,12 +230,8 @@ public partial class BP_Ship : Node2D
         Rotation += direction * _steering * (float)GetProcessDeltaTime();
     }
 
-    
-    public void MoveIfAlignedWithTarget()                               //Rotates Ship until it points in the Direction of Target (for now only Stations)
+    public void MoveIfAlignedWithTarget(int tx, int ty)                               //Rotates Ship until it points in the Direction of Target (for now only Stations)   Koord einsetzen
     {
-        int tx = (int)_targetStationsList[_activeTargetStation].target.Position.X;
-        int ty = (int)_targetStationsList[_activeTargetStation].target.Position.Y;
-
         if (isAligned(tx, ty))
         {
             Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
@@ -234,26 +239,9 @@ public partial class BP_Ship : Node2D
         }
         else
         {
-            RotateTowardsStation(tx, ty);
+            RotateTowards(tx, ty);
         }
     }
-
-    public void MoveIfAlignedWithJumpgate()                              
-    {
-        int tx = (int)_targetJumpgate.Position.X;
-        int ty = (int)_targetJumpgate.Position.Y;
-
-        if (isAligned(tx, ty))
-        {
-            Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
-            Position = new Vector2(Position.X + directionToStation.X * 0.5f, Position.Y + directionToStation.Y * 0.5f);
-        }
-        else
-        {
-            RotateTowardsStation(tx, ty);
-        }
-    }
-
 
     public List<Jumpgate> PathToTargetSector(BP_Sector target)
     {
@@ -287,9 +275,10 @@ public partial class BP_Ship : Node2D
                     List<Jumpgate> newpath = new List<Jumpgate>(check.paths);
                     newpath.Add(gate);
                     toCheck.Add((gate.GetTargetSector(), newpath));
+                    
                 }
             }
-
+            
             checkedSector.Add(check.sector);
             toCheck.RemoveAt(0);
 
@@ -297,28 +286,6 @@ public partial class BP_Ship : Node2D
         }
         return path;
     }
-
-    public List<Jumpgate> GetShortest(List<List<Jumpgate>> compareMe)
-    {
-        List<Jumpgate> path = new List<Jumpgate>();
-
-        int length = 0;
-        foreach (var item in compareMe)
-        {
-            if (length == 0)
-            {
-                length = item.Count;
-                path = item;
-            }
-            else if (item.Count < length)
-            {
-                length = item.Count;
-                path = item;
-            }
-        }
-        return path;
-    }
-
 
 public void CalculateUsedCargo() 
     {
