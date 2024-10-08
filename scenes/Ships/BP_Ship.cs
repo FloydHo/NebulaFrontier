@@ -1,4 +1,5 @@
 using Godot;
+using NebulaFrontier.scenes.Ships.State;
 using NebulaFrontier.scripts.Datataypes;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,11 @@ public partial class BP_Ship : Node2D
     private bool _wait = false;
     List<(BP_Station target, int[] buy, int[] sell)> _targetStationsList = new List<(BP_Station, int[], int[])>();
     int _activeTargetStation = 0;
-    
+
+    //States
+    private IShipState _currentState;
+
+    List<Jumpgate> _jgPath = new List<Jumpgate>();
     Jumpgate _targetJumpgate;
 
     Timer _waitTimer;
@@ -50,13 +55,10 @@ public partial class BP_Ship : Node2D
     ColorRect _crect;
 
 
-    List<Jumpgate> _jgPath = new List<Jumpgate>();
 
     public override void _Ready()
     {
         CreateID();
-
- 
 
         //SaveNodes
         _waitTimer = GetNode<Timer>("waitTimer");
@@ -64,11 +66,8 @@ public partial class BP_Ship : Node2D
         _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
         _crect = GetNode<ColorRect>("ColorRect");
 
+        SetState(new WaitState());
 
-
-        //Debug 
-        //_targetStationsList.Add((GameManager._allBuildings[0], new int[] { 101}  , new int[0]));
-        //_targetStationsList.Add((GameManager._allBuildings[1], new int[] { 100 }, new int[] { 101}));
         _targetJumpgate = GameManager._allJumpgates["BeOmjg01"];
     }
 
@@ -91,6 +90,13 @@ public partial class BP_Ship : Node2D
     public override void _Process(double delta)
     {
         Travel();
+    }
+
+    public void SetState(IShipState newState)
+    {
+        _currentState?.ExitState(this);
+        _currentState = newState ;
+        _currentState.EnterState(this);
     }
 
     public void Travel()
@@ -128,7 +134,7 @@ public partial class BP_Ship : Node2D
             }
             else
             {
-                MoveIfAlignedWithTarget(_activeTargetStation.Position.X, _activeTargetStation.Position.Y);                                  //Traveling
+                MoveIfAlignedWithTarget((int)_targetStationsList[_activeTargetStation].target.Position.X, (int)_targetStationsList[_activeTargetStation].target.Position.Y);                                  //Traveling
             }
         }
         else if (_isDocked && !_tradeComplete && _wait)                     //Trading
@@ -208,7 +214,7 @@ public partial class BP_Ship : Node2D
             }
             else
             {
-                MoveIfAlignedWithTarget(_targetJumpgate.Position.X, _targetJumpgate.Position.Y);
+                MoveIfAlignedWithTarget((int)_targetJumpgate.Position.X, (int)_targetJumpgate.Position.Y);
             }
         }    
     }
