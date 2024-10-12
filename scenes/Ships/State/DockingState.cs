@@ -6,17 +6,24 @@ using System.Threading.Tasks;
 
 namespace NebulaFrontier.scenes.Ships.State
 {
-    internal class DockingState
+    public class DockingState : IShipState
     {
-        void EnterState(BP_Ship ship)
+        public void EnterState(BP_Ship ship)
         {
 
         }
-        void UpdateState(BP_Ship ship)
+        public void UpdateState(BP_Ship ship)
         {
-
+            if (ship.HasArrivedAtTargetStation())
+            {
+                ship.SetState(new DockedState());
+            }
+            else
+            {
+                ship.DockAtStation();
+            }
         }
-        void ExitState(BP_Ship ship)
+        public void ExitState(BP_Ship ship)
         {
 
         }

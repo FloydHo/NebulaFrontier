@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace NebulaFrontier.scenes.Ships.State
 {
-    internal class DockedState
+    internal class DockedState : IShipState
     {
-        void EnterState(BP_Ship ship)
+        public void EnterState(BP_Ship ship)
         {
-
+            ship.Hide();
         }
-        void UpdateState(BP_Ship ship)
+        public void UpdateState(BP_Ship ship)
         {
-
+            
         }
-        void ExitState(BP_Ship ship)
+        public void ExitState(BP_Ship ship)
         {
-
+            ship.Show();
         }
 
     }

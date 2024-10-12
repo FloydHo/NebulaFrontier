@@ -1,26 +1,27 @@
-using Godot;
+﻿using Godot;
 using NebulaFrontier.scenes.Ships.State;
 using NebulaFrontier.scripts.Datataypes;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 
 public partial class BP_Ship : Node2D
 {
     //Export Variables
 
-	[Export] private string _shipName;
+    [Export] private string _shipName;
     [Export] private string _shipDesc;
     [Export] private float _velocity;
-	[Export] private float _steering;
-	[Export] private int _crewSize;
-	[Export] private int _hull;                         //HitPoints
-	[Export] private int _armour;
-	[Export] private int _weaponDmg;
-	[Export] private int _cargoSize;
+    [Export] private float _steering;
+    [Export] private int _crewSize;
+    [Export] private int _hull; //HitPoints
+    [Export] private int _armour;
+    [Export] private int _weaponDmg;
+    [Export] private int _cargoSize;
     [Export] private TransportClass _transportClass;
-	[Export] private int _price;
+    [Export] private int _price;
     [Export] private string _race;
     [Export] public Godot.Collections.Dictionary<int, int> _cargo { get; private set; } = new Godot.Collections.Dictionary<int, int>();
 
@@ -30,10 +31,7 @@ public partial class BP_Ship : Node2D
     private string _shipID;
 
     //Variables for Trading (Buy/Sell)
-    private bool _tradingActive = true; 
-    private bool _isDocked = false;
-    private bool _tradeComplete = false;
-    private bool _wait = false;
+    private bool _tradingActive = true;
     List<(BP_Station target, int[] buy, int[] sell)> _targetStationsList = new List<(BP_Station, int[], int[])>();
     int _activeTargetStation = 0;
 
@@ -55,18 +53,13 @@ public partial class BP_Ship : Node2D
     ColorRect _crect;
 
 
-
     public override void _Ready()
     {
-        CreateID();
-
-        //SaveNodes
-        _waitTimer = GetNode<Timer>("waitTimer");
-        _waitTimer.Timeout += WaitTimer;
-        _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
-        _crect = GetNode<ColorRect>("ColorRect");
-
         SetState(new WaitState());
+
+        CreateID();
+        _crect = GetNode<ColorRect>("ColorRect");
+        _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
 
         _targetJumpgate = GameManager._allJumpgates["BeOmjg01"];
     }
@@ -89,134 +82,81 @@ public partial class BP_Ship : Node2D
 
     public override void _Process(double delta)
     {
-        Travel();
+        _currentState.UpdateState(this);
     }
 
     public void SetState(IShipState newState)
     {
         _currentState?.ExitState(this);
-        _currentState = newState ;
+        _currentState = newState;
         _currentState.EnterState(this);
     }
 
-    public void Travel()
+    public bool HasTarget()
     {
-        if (_targetStationsList.Count != 0 && _jgPath.Count == 0)
+        if (_targetStationsList .Count > 0) return true;
+        return false;
+    }
+
+    public bool HasReachedTargetSector()
+    {
+        if (_targetStationsList[_activeTargetStation].target.GetSector() == _inSector)
         {
-            if (_targetStationsList[_activeTargetStation].target.GetSector() == _inSector)
-            {
-                MoveToTargetStation();
-            }
-            else
-            {
-                _jgPath = PathToTargetSector(_targetStationsList[_activeTargetStation].target.GetSector());
-            }
+            return true;
         }
-        else if(_jgPath.Count != 0)
+        else
         {
-            MoveToTargetJumpgate();
+            _jgPath = PathToTargetSector(_targetStationsList[_activeTargetStation].target.GetSector());
+            return false;
         }
     }
 
-
-    public void MoveToTargetStation()
+    public bool HasArrivedAtTargetJumpgate()
     {
-        if (_tradingActive && _targetStationsList.Count != 0 && !_isDocked) //Docking
-        {
-            if ((int)Position.X <= (int)_targetStationsList[_activeTargetStation].target.Position.X + 5 && (int)Position.X >= (int)_targetStationsList[_activeTargetStation].target.Position.X - 5 &&
-                (int)Position.Y <= (int)_targetStationsList[_activeTargetStation].target.Position.Y + 5 && (int)Position.Y >= (int)_targetStationsList[_activeTargetStation].target.Position.Y - 5)
-            {
-                _targetStationsList[_activeTargetStation].target.ShipDocking(this);
-                Hide();
-                _isDocked = true;
-                _waitTimer.WaitTime = _dockTimer;
-                _waitTimer.Start();
-            }
-            else
-            {
-                MoveIfAlignedWithTarget((int)_targetStationsList[_activeTargetStation].target.Position.X, (int)_targetStationsList[_activeTargetStation].target.Position.Y);                                  //Traveling
-            }
-        }
-        else if (_isDocked && !_tradeComplete && _wait)                     //Trading
-        {
-            _wait = false;
-
-            if (_targetStationsList[_activeTargetStation].buy.Length > 0)   //Try to Buy
-            {
-                ExecuteBuy();
-            }
-
-            if (_targetStationsList[_activeTargetStation].sell.Length > 0)  //Try to Sell
-            {
-                ExecuteSell();
-            }
-
-            _tradeComplete = true;
-            Hide();
-            _waitTimer.WaitTime = _transportTimer;
-            _waitTimer.Start();
-        }
-        else if (_isDocked && _tradeComplete && _wait)                      // Undocking   && Traiding Loop
-        {
-            _wait = false;
-
-            _targetStationsList[_activeTargetStation].target.ShipUndock(this);
-
-            if (_activeTargetStation == _targetStationsList.Count - 1) _activeTargetStation = 0;
-            else _activeTargetStation += 1;
-
-            _tradeComplete = false;
-            _isDocked = false;
-
-            Show();
-            //ShowCargo();
-        }
+        return HasArrivedAtTarget((int)_targetJumpgate.Position.X, (int)_targetJumpgate.Position.Y);
     }
 
-    public void ExecuteBuy()
+    public bool HasArrivedAtTargetStation()
     {
-        foreach (var id in _targetStationsList[_activeTargetStation].buy)
-        {
-            int amount = _targetStationsList[_activeTargetStation].target.BuyWareFromStation(id, 1000);
-            if (_cargo.ContainsKey(id))
-            {
-                _cargo[id] += amount;
-            }
-            else
-            {
-                _cargo.Add(id, amount);
-            }
-        }
-        CalculateUsedCargo();
+        return HasArrivedAtTarget((int)_targetStationsList[_activeTargetStation].target.Position.X, (int)_targetStationsList[_activeTargetStation].target.Position.Y);
     }
 
-    public void ExecuteSell() 
+    public bool HasArrivedAtTarget(int tx, int ty)
     {
-        foreach (var id in _targetStationsList[_activeTargetStation].sell)
+        if ((int)Position.X <= tx + 2 && (int)Position.X >= tx - 2 &&
+            (int)Position.Y <= ty + 2 && (int)Position.Y >= ty - 2)
         {
-            int amount = _targetStationsList[_activeTargetStation].target.SellWareToStation(id, _cargo[id]);
-            _cargo[id] -= amount;
-            if (_cargo[id] == 0) _cargo.Remove(id);
+            return true;
         }
-        CalculateUsedCargo();
+        return false;
     }
 
-    public void MoveToTargetJumpgate()
+    public void MoveToNextJumpgate()
     {
         if (_jgPath.Count != 0)
         {
             _targetJumpgate = _jgPath[0];
-            if ((int)Position.X <= (int)_targetJumpgate.Position.X + 5 && (int)Position.X >= (int)_targetJumpgate.Position.X - 5 &&
-                (int)Position.Y <= (int)_targetJumpgate.Position.Y + 5 && (int)Position.Y >= (int)_targetJumpgate.Position.Y - 5)
-            {
-                _targetJumpgate.TransferShip(this);
-                _jgPath.RemoveAt(0);
-            }
-            else
-            {
-                MoveIfAlignedWithTarget((int)_targetJumpgate.Position.X, (int)_targetJumpgate.Position.Y);
-            }
-        }    
+            MoveIfAlignedWithTarget((int)_targetJumpgate.Position.X, (int)_targetJumpgate.Position.Y);
+        }
+        else GD.Print("Jumpgate List Empty Error 'MoveToNextJumpgate()'");
+    }
+
+    public void DockAtStation()
+    {
+        MoveIfAlignedWithTarget((int)_targetStationsList[_activeTargetStation].target.Position.X, (int)_targetStationsList[_activeTargetStation].target.Position.Y);                                  //Traveling
+    }
+
+    public void MoveIfAlignedWithTarget(int tx, int ty) //Rotates Ship until it points in the Direction of Target (for now only Stations)   Koord einsetzen
+    {
+        if (isAligned(tx, ty))
+        {
+            Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
+            Position = new Vector2(Position.X + directionToStation.X * 0.5f, Position.Y + directionToStation.Y * 0.5f);
+        }
+        else
+        {
+            RotateTowards(tx, ty);
+        }
     }
 
     public bool isAligned(int x, int y)
@@ -236,22 +176,27 @@ public partial class BP_Ship : Node2D
         Rotation += direction * _steering * (float)GetProcessDeltaTime();
     }
 
-    public void MoveIfAlignedWithTarget(int tx, int ty)                               //Rotates Ship until it points in the Direction of Target (for now only Stations)   Koord einsetzen
+    public void JumpgateTransfer()
     {
-        if (isAligned(tx, ty))
+        _targetJumpgate.TransferShip(this);
+        _jgPath.RemoveAt(0);
+    }
+
+
+
+    //Misc
+
+    public void CalculateUsedCargo()
+    {
+        _usedCargoSpace = 0;
+        foreach (var item in _cargo)
         {
-            Vector2 directionToStation = (new Vector2(tx, ty) - Position).Normalized();
-            Position = new Vector2(Position.X + directionToStation.X * 0.5f, Position.Y + directionToStation.Y * 0.5f);
-        }
-        else
-        {
-            RotateTowards(tx, ty);
+            _usedCargoSpace += item.Value * ItemDB.Instance.GetItemByID(item.Key)._unitSize;
         }
     }
 
     public List<Jumpgate> PathToTargetSector(BP_Sector target)
     {
-        bool foundSector = false; 
         bool searchOn = true;
 
         List<Jumpgate> path = new List<Jumpgate>();
@@ -272,7 +217,6 @@ public partial class BP_Ship : Node2D
                 else if (gate.GetTargetSector() == target)
                 {
                     searchOn = false;
-                    foundSector = true;
                     path = check.paths;
                     path.Add(gate);
                 }
@@ -281,10 +225,10 @@ public partial class BP_Ship : Node2D
                     List<Jumpgate> newpath = new List<Jumpgate>(check.paths);
                     newpath.Add(gate);
                     toCheck.Add((gate.GetTargetSector(), newpath));
-                    
+
                 }
             }
-            
+
             checkedSector.Add(check.sector);
             toCheck.RemoveAt(0);
 
@@ -293,16 +237,7 @@ public partial class BP_Ship : Node2D
         return path;
     }
 
-public void CalculateUsedCargo() 
-    {
-        _usedCargoSpace = 0;
-        foreach (var item in _cargo)
-        {
-            _usedCargoSpace += item.Value * ItemDB.Instance.GetItemByID(item.Key)._unitSize;
-        }
-    }
-
-    private void CreateID()
+        private void CreateID()
     {
         bool unique = false;
         string identifier = "";
@@ -325,7 +260,7 @@ public void CalculateUsedCargo()
 
     public void ShowCargo()
     {
-        foreach(var c in _cargo)
+        foreach (var c in _cargo)
         {
             GD.Print($"{c.Key} : {c.Value}");
         }
@@ -333,10 +268,6 @@ public void CalculateUsedCargo()
 
     public void UpdateOnTick()
     {
-    }
-    public void WaitTimer()
-    {
-        _wait = true;
     }
 
     public void SetHasPopup(bool b)
@@ -349,9 +280,12 @@ public void CalculateUsedCargo()
         _jgPath = PathToTargetSector(sec);
     }
 
-    public string GetName() => _shipName;
+    public new string GetName() => _shipName;
     public string GetShipID() => _shipID;
     public BP_Sector GetInSector() => _inSector;
     public void SetInSector(BP_Sector insec) => _inSector = insec;
     public void AddTargetStation((BP_Station target, int[] buy, int[] sell) give) => _targetStationsList.Add(give);
+
+
 }
+

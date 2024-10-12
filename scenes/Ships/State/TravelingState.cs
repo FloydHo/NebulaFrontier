@@ -6,17 +6,31 @@ using System.Threading.Tasks;
 
 namespace NebulaFrontier.scenes.Ships.State
 {
-    internal class TravelingState
+    public class TravelingState : IShipState
     {
-        void EnterState(BP_Ship ship)
+        public void EnterState(BP_Ship ship)
         {
 
         }
-        void UpdateState(BP_Ship ship)
+        public void UpdateState(BP_Ship ship)
         {
-
+            if (ship.ShipIsSameSectorAsTargetStation())
+            {
+                ship.SetState(new DockingState());
+            }
+            else
+            {
+                if (ship.HasReachedTargetSector())
+                {
+                    ship.JumpgateTransfer();
+                }
+                else
+                {
+                    ship.MoveToNextJumpgate();
+                }
+            }
         }
-        void ExitState(BP_Ship ship)
+        public void ExitState(BP_Ship ship)
         {
 
         }
