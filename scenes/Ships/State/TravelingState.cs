@@ -14,13 +14,13 @@ namespace NebulaFrontier.scenes.Ships.State
         }
         public void UpdateState(BP_Ship ship)
         {
-            if (ship.ShipIsSameSectorAsTargetStation())
+            if (ship.HasReachedTargetSector())
             {
                 ship.SetState(new DockingState());
             }
             else
             {
-                if (ship.HasReachedTargetSector())
+                if (ship.HasArrivedAtTargetJumpgate())
                 {
                     ship.JumpgateTransfer();
                 }

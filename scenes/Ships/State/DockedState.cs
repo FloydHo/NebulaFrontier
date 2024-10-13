@@ -14,7 +14,13 @@ namespace NebulaFrontier.scenes.Ships.State
         }
         public void UpdateState(BP_Ship ship)
         {
-            
+            if (ship.IsAutoTradingActive())
+            {
+                ship.ExecuteSell();
+                ship.ExecuteBuy();
+                ship.ChangeNextToStation();
+            }
+            ship.SetState(new TravelingState());
         }
         public void ExitState(BP_Ship ship)
         {

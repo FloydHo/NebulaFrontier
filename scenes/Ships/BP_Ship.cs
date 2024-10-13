@@ -184,7 +184,37 @@ public partial class BP_Ship : Node2D
 
 
 
-    //Misc
+    //*************************************     Trading     ************************************
+
+    // TODO: Add Variable for the Station the SHip is currentlx docked, instead of getting it through the List.
+
+    public void ExecuteBuy()
+    {
+        foreach (var id in _targetStationsList[_activeTargetStation].buy)
+        {
+            int amount = _targetStationsList[_activeTargetStation].target.BuyWareFromStation(id, 1000); 
+            if (_cargo.ContainsKey(id))
+            {
+                _cargo[id] += amount;
+            }
+            else
+            {
+                _cargo.Add(id, amount);
+            }
+        }
+        CalculateUsedCargo();
+    }
+
+    public void ExecuteSell()
+    {
+        foreach (var id in _targetStationsList[_activeTargetStation].sell)
+        {
+            int amount = _targetStationsList[_activeTargetStation].target.SellWareToStation(id, _cargo[id]);
+            _cargo[id] -= amount;
+            if (_cargo[id] == 0) _cargo.Remove(id);
+        }
+        CalculateUsedCargo();
+    }
 
     public void CalculateUsedCargo()
     {
@@ -194,6 +224,14 @@ public partial class BP_Ship : Node2D
             _usedCargoSpace += item.Value * ItemDB.Instance.GetItemByID(item.Key)._unitSize;
         }
     }
+
+    public void ChangeNextToStation()
+    {
+        if (_activeTargetStation == _targetStationsList.Count - 1) _activeTargetStation = 0;
+        else _activeTargetStation += 1;
+    }
+
+    //*********************************     Misc    ***********************************************
 
     public List<Jumpgate> PathToTargetSector(BP_Sector target)
     {
@@ -285,6 +323,8 @@ public partial class BP_Ship : Node2D
     public BP_Sector GetInSector() => _inSector;
     public void SetInSector(BP_Sector insec) => _inSector = insec;
     public void AddTargetStation((BP_Station target, int[] buy, int[] sell) give) => _targetStationsList.Add(give);
+    public bool IsAutoTradingActive() => _tradingActive;
+    public void SetAutoTrading(bool s) => _tradingActive = s;
 
 
 }
