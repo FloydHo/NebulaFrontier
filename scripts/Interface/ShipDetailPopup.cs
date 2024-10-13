@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Runtime.CompilerServices;
+using static Godot.WebSocketPeer;
 
 
 public partial class ShipDetailPopup : Control
@@ -14,7 +15,8 @@ public partial class ShipDetailPopup : Control
     private Label _currentSector;
     private Label _flightime;
     private Label _cargo;
-    
+    private Label _state;
+
     private VBoxContainer _cargoContainerItemName;
     private VBoxContainer _cargoContainerItemAmount;
     private VBoxContainer _cargoContainerItemVol;
@@ -28,6 +30,7 @@ public partial class ShipDetailPopup : Control
         _shipID = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_id");
         _currentSector = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_currenSector");
         _flightime = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_flighttime");
+        _state = GetNode<Label>("Window/Control/VBoxContainer/pnl_details/vbox_details/lbl_state");
         _cargo = GetNode<Label>("Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/hbox_cargolegend/lbl_cargo");
         _cargoContainerItemName = GetNode<VBoxContainer>("Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo/vbox_cargoItemName");
         _cargoContainerItemAmount = GetNode<VBoxContainer>("Window/Control/VBoxContainer/pnl_cargo/vbox_cargo/pnl_shipCargo/hbox_shipCargo/vbox_cargoItemAmount");
@@ -57,6 +60,8 @@ public partial class ShipDetailPopup : Control
         _shipID.Text = ($"ID: {_targetShip.GetShipID()}");
         _currentSector.Text  = ($"In Sektor: {_targetShip.GetInSector().GetSectorName()}");
         _flightime.Text = "00:00:20";
+        _state.Text = _targetShip.GetState();
+
         _cargo.Text = ($"Fracht: {_targetShip.GetUsedCargoSize(),-5}/{_targetShip.GetCargoSize()}");
 
         foreach (var item in _targetShip._cargo) 

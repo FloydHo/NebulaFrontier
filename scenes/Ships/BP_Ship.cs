@@ -41,10 +41,8 @@ public partial class BP_Ship : Node2D
     List<Jumpgate> _jgPath = new List<Jumpgate>();
     Jumpgate _targetJumpgate;
 
-    Timer _waitTimer;
-    int _dockTimer = 3;
-    int _transportTimer = 6;
-    int _undockTimer = 3;
+    Timer _stateChangeTimer;
+    Action _nextStateAction;
 
 
     //Interface Variables 
@@ -58,10 +56,15 @@ public partial class BP_Ship : Node2D
         SetState(new WaitState());
 
         CreateID();
+
+        _stateChangeTimer = GetNode<Timer>("waitTimer");
+        _stateChangeTimer.WaitTime = 3.0f;  
+        _stateChangeTimer.OneShot = true;
+        _stateChangeTimer.Timeout += OnStateChangeTimerTimeout;
+
         _crect = GetNode<ColorRect>("ColorRect");
         _mainScene = GetTree().Root.GetNode<MainScene>("MainScene");
 
-        _targetJumpgate = GameManager._allJumpgates["BeOmjg01"];
     }
 
     public override void _Input(InputEvent @event)
@@ -92,6 +95,26 @@ public partial class BP_Ship : Node2D
         _currentState.EnterState(this);
     }
 
+    private void OnStateChangeTimerTimeout()
+    {
+        _nextStateAction?.Invoke();
+    }
+
+    public void StartStateChangeTimer(float waitTime, Action nextStateAction)
+    {
+        if (!_stateChangeTimer.IsStopped())
+        {
+            _stateChangeTimer.Stop();  
+        }
+
+        _stateChangeTimer.WaitTime = waitTime;  
+        _nextStateAction = nextStateAction;  
+        _stateChangeTimer.Start();  
+    }
+
+
+    //****************************      Traveling       *************************************
+
     public bool HasTarget()
     {
         if (_targetStationsList .Count > 0) return true;
@@ -113,6 +136,7 @@ public partial class BP_Ship : Node2D
 
     public bool HasArrivedAtTargetJumpgate()
     {
+        if (_targetJumpgate == null) return false;
         return HasArrivedAtTarget((int)_targetJumpgate.Position.X, (int)_targetJumpgate.Position.Y);
     }
 
@@ -143,7 +167,7 @@ public partial class BP_Ship : Node2D
 
     public void DockAtStation()
     {
-        MoveIfAlignedWithTarget((int)_targetStationsList[_activeTargetStation].target.Position.X, (int)_targetStationsList[_activeTargetStation].target.Position.Y);                                  //Traveling
+        MoveIfAlignedWithTarget((int)_targetStationsList[_activeTargetStation].target.Position.X, (int)_targetStationsList[_activeTargetStation].target.Position.Y); //Traveling
     }
 
     public void MoveIfAlignedWithTarget(int tx, int ty) //Rotates Ship until it points in the Direction of Target (for now only Stations)   Koord einsetzen
@@ -181,8 +205,6 @@ public partial class BP_Ship : Node2D
         _targetJumpgate.TransferShip(this);
         _jgPath.RemoveAt(0);
     }
-
-
 
     //*************************************     Trading     ************************************
 
@@ -231,6 +253,7 @@ public partial class BP_Ship : Node2D
         else _activeTargetStation += 1;
     }
 
+
     //*********************************     Misc    ***********************************************
 
     public List<Jumpgate> PathToTargetSector(BP_Sector target)
@@ -275,7 +298,7 @@ public partial class BP_Ship : Node2D
         return path;
     }
 
-        private void CreateID()
+    private void CreateID()
     {
         bool unique = false;
         string identifier = "";
@@ -322,6 +345,7 @@ public partial class BP_Ship : Node2D
     public string GetShipID() => _shipID;
     public BP_Sector GetInSector() => _inSector;
     public void SetInSector(BP_Sector insec) => _inSector = insec;
+    public string GetState () => _currentState.GetType().Name;
     public void AddTargetStation((BP_Station target, int[] buy, int[] sell) give) => _targetStationsList.Add(give);
     public bool IsAutoTradingActive() => _tradingActive;
     public void SetAutoTrading(bool s) => _tradingActive = s;

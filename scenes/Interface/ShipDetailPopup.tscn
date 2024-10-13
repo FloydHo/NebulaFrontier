@@ -120,6 +120,9 @@ layout_mode = 2
 text = "Flugzeit
 "
 
+[node name="lbl_state" type="Label" parent="Window/Control/VBoxContainer/pnl_details/vbox_details"]
+layout_mode = 2
+
 [node name="HSeparator" type="HSeparator" parent="Window/Control/VBoxContainer"]
 layout_mode = 2
 

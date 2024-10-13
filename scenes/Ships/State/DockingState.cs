@@ -8,17 +8,20 @@ namespace NebulaFrontier.scenes.Ships.State
 {
     public class DockingState : IShipState
     {
+        private bool _dockingInProgress = false; 
+
         public void EnterState(BP_Ship ship)
         {
 
         }
         public void UpdateState(BP_Ship ship)
         {
-            if (ship.HasArrivedAtTargetStation())
+            if (!_dockingInProgress && ship.HasArrivedAtTargetStation())
             {
-                ship.SetState(new DockedState());
+                _dockingInProgress = true;
+                ship.StartStateChangeTimer(3.0f, () => ship.SetState(new DockedState()));
             }
-            else
+            else if(!_dockingInProgress)
             {
                 ship.DockAtStation();
             }
